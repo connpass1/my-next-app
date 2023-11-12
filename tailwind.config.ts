@@ -34,7 +34,7 @@ const config: Config = {
       addVariant("child", "& > *");
       addVariant("child-hover", "& > *:hover");
       addVariant("hover-a", "& > a:hover");
-      addVariant("child-a", "& > a");
+      addVariant("child-a", "& > a"); 
     },
   ],
 };

@@ -31,7 +31,7 @@ yarn-error.log*
 .vercel
 .wrangler
 package-lock.json
-
+.vscode
 # typescript
 *.tsbuildinfo
 next-env.d.ts

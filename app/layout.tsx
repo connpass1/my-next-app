@@ -15,13 +15,15 @@ const font2 = Oswald({
   weight: "400",
 });
 
+import "@/app/globals.css";
+import Layout from "./_layout";
+
 export type ChildrenType = { children: React.ReactNode };
 export default function RootLayout({ children }: ChildrenType) {
   return (
-    <html lang="ru" className="dark">
-      <body
-        className={` ${font1.variable}  ${font3.variable} ${font2.variable}`}
-      >
+  
+ <html lang="ru" className="dark">
+      <body className={` ${font1.variable}  ${font3.variable} ${font2.variable}`}>
         <div
           className="font-font1 col-span-full col-start-2 row-start-2 grid h-full w-full grid-flow-row 
           auto-rows-max grid-cols-6 gap-y-4  
@@ -29,6 +31,7 @@ export default function RootLayout({ children }: ChildrenType) {
         >
           {children}
         </div>
+      <Layout/>
       </body>
     </html>
   );
