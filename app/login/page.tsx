@@ -25,8 +25,6 @@ if(user==="")    return <div className='grid place-items-center row-span-full co
 <span className="w-96">  </span>
 
 </div>
- 
-    
     return <div className='grid place-items-center row-span-full col-span-full  '> 
         <span>{JSON.stringify(user)} </span>
         <button onClick={exit}> exit </button>

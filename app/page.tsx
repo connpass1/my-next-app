@@ -16,8 +16,11 @@ export default function Home() {
    // formData.append("fileName", file.name);
    const requestOptions:RequestInit  = { 
     method: 'POST', 
-    body: JSON.stringify({ email: "email", password: "password" }) 
-};  
+    body: JSON.stringify({ email: "connpass21f2@mailinator.com", password: "ffffff" }) 
+};
+
+
+
 console.log("hhhhhhhhhhhhh")
    fetch(url,requestOptions).then((res)=>{
 
@@ -31,16 +34,11 @@ if(res.ok) {
     return e;
   });
  
-
-  //   try {
-  //     setResult(JSON.stringify(await response.json()));
-  //   } catch (e) {
-  //     setResult(JSON.stringify(e)+"error");
-  //   }
+ 
   }
 
   return (
-    <main className=" grig-cols-1 grid">
+    <main className="grig-cols-1 grid">
       <p>{result}</p>
       <form onSubmit={handleSubmit} className=" grig-cols-1 grid gap-8" >
         <input

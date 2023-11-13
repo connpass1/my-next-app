@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { ErrorOption, useForm } from "react-hook-form";
 import { BiCheckboxChecked, BiCheckboxMinus } from "react-icons/bi";
+ 
 export interface IFormInput {
   email: string;
   password: string;
@@ -15,7 +16,7 @@ export interface IFormInput {
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState(""); 
+ // const [result, setResult] = useState(""); 
    const router = useRouter()
   const {
     register,
@@ -23,36 +24,42 @@ export default function Page() {
     setError, 
     clearErrors, 
     formState: { errors },
-  } = useForm<IFormInput>(); 
- 
-
+  } = useForm<IFormInput>();  
   async function  onSubmit (output: IFormInput) {
    // event?.preventDefault();
    clearErrors()
     setLoading(true); 
-   try{ 
-    let response = await signIn(output.email, output.password) 
+      const { email, password} = output
+     const response = await fetch( "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword", {
+      method: 'POST', 
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    }); 
+
+    
+   try{  
+    response.headers.append("Content-Type", 'application/json; charset=utf-8')
+    response.headers.append("X-goog-api-key", "" + process.env.NEXT_PUBLIC_FIREBASE_API_KEY  ) 
     let json = await response.json();
-   if(json)setResult(JSON.stringify(json))
-  else throw new  Error("no json")
-  
+    const {email,error}=json
+    if(!json)throw new  Error("no json")
+    if(error) return  setError("root", { type: "auth", message:   error.message})  
+    localStorage.setItem("user",JSON.stringify(json  ));
+    router.push("/profile") 
   }
    catch(e){
-    const error: ErrorOption = { type: "auth", message: JSON.stringify(e) };
+    const error: ErrorOption = { type: "auth", message: JSON.stringify(e) +"ERR"};
         setError("root", error);
-   } 
-   
-   
-   finally{ setLoading(false);}
- 
+   }  
+   finally{ setLoading(false);} 
   }
-      
- 
- 
+       
   return (
     <form className="grid grid-cols-3 gap-4" onSubmit={handleSubmit(onSubmit)}>
       <label   className="block  text-right font-font1 italic"
-        htmlFor="email"> Your email {result}
+        htmlFor="email"> Your email  
       </label> 
       <input
         type="text" 
@@ -81,7 +88,7 @@ export default function Page() {
         id="password"
         placeholder="••••••••"
         className={errors?.password?.message===undefined?"input":" err"}    />
- <ErrorText >{errors?.password?.message}</ErrorText >
+        <ErrorText >{errors?.password?.message}</ErrorText >
       <label className="flex items-center cursor-pointer col-span-2">
         <input
           id="remember"

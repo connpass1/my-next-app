@@ -11,7 +11,8 @@ const mainMenu = [
   ["item4s", "/item/4"],
   ["item77", "/item/77"],
   ["item777", "/item/777"],
-  ["item", "/item"] 
+  ["item", "/item"], 
+  ["profile", "/profile"] 
   ]
 
 export  function Menu() {
